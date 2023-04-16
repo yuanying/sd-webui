@@ -45,7 +45,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: AbdBarho/stable-diffusion-webui-docker
-          ref: {{ env.SD_WEBUI_VER }}
+          ref: ${{ env.SD_WEBUI_VER }}
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
