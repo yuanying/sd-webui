@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # renovate: datasource=github-releases depName=AbdBarho/stable-diffusion-webui-docker
-      SD_WEBUI_VER: 6.0.0
+      SD_WEBUI_VER: 8.1.0
     steps:
       -
         name: Prepare
