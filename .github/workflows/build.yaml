@@ -47,6 +47,26 @@ jobs:
           repository: AbdBarho/stable-diffusion-webui-docker
           ref: ${{ env.SD_WEBUI_VER }}
       -
+        name: Patch Dockerfile to fix issue
+        run: |
+          cat << 'EOF' | patch -p1
+          diff --git a/services/AUTOMATIC1111/Dockerfile b/services/AUTOMATIC1111/Dockerfile
+          index d595784..15e2981 100644
+          --- a/services/AUTOMATIC1111/Dockerfile
+          +++ b/services/AUTOMATIC1111/Dockerfile
+          @@ -39,6 +39,10 @@ ENV ROOT=/stable-diffusion-webui
+           COPY --from=download /repositories/ ${ROOT}/repositories/
+           RUN mkdir ${ROOT}/interrogate && cp ${ROOT}/repositories/clip-interrogator/clip_interrogator/data/* ${ROOT}/interrogate
+
+          +RUN --mount=type=cache,target=/root/.cache/pip \
+          +   pip uninstall -y typing_extensions && \
+          +   pip install typing_extensions==4.11.0
+          +
+           RUN --mount=type=cache,target=/root/.cache/pip \
+             pip install pyngrok xformers==0.0.26.post1 \
+             git+https://github.com/TencentARC/GFPGAN.git@8d2447a2d918f8eba5a4a01463fd48e45126a379 \
+          EOF
+      -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       -
